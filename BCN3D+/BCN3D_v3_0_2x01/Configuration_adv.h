@@ -214,6 +214,9 @@
 // The hardware watchdog should reset the Microcontroller disabling all outputs, in case the firmware gets stuck and doesn't do temperature regulation.
 #define USE_WATCHDOG
 
+#define SDCARD_RATHERRECENTFIRST
+
+
 #ifdef USE_WATCHDOG
 // If you have a watchdog reboot in an ArduinoMega2560 then the device will hang forever, as a watchdog reset will leave the watchdog on.
 // The "WATCHDOG_RESET_MANUAL" goes around this by not using the hardware reset.
@@ -305,11 +308,11 @@ const unsigned int dropsegments=5; //everything with less than this number of st
 
 //adds support for experimental filament exchange support M600; requires display
 #ifdef ULTIPANEL
-  //#define FILAMENTCHANGEENABLE
+  #define FILAMENTCHANGEENABLE
   #ifdef FILAMENTCHANGEENABLE
     #define FILAMENTCHANGE_XPOS 3
     #define FILAMENTCHANGE_YPOS 3
-    #define FILAMENTCHANGE_ZADD 10
+    #define FILAMENTCHANGE_ZADD 30
     #define FILAMENTCHANGE_FIRSTRETRACT -2
     #define FILAMENTCHANGE_FINALRETRACT -100
   #endif
