@@ -65,15 +65,21 @@
 #define LCD_STR_BEDTEMP     "\xFE"
 #define LCD_STR_DEGREE      "\xB0"
 #define LCD_STR_THERMOMETER "\xFF"
-#define LCD_STR_UPLEVEL     "\xFB"
+
+#define LCD_STR_UPLEVEL     "\x5E"
+//#define LCD_STR_UPLEVEL     "\xFB"
+
 #define LCD_STR_REFRESH     "\xF8"
 #define LCD_STR_FOLDER      "\xF9"
 #define LCD_STR_FEEDRATE    "\xFD"
 #define LCD_STR_CLOCK       "\xFC"
-#define LCD_STR_ARROW_RIGHT "\xFA"
 
-#define FONT_STATUSMENU	u8g_font_6x9
+#define LCD_STR_ARROW_RIGHT "\x3E"
 
+//#define LCD_STR_ARROW_RIGHT "\xFA"
+
+// #define FONT_STATUSMENU	u8g_font_6x9
+#define FONT_STATUSMENU	u8g_font_5x8
 // LCD selection
 #ifdef U8GLIB_ST7920
 //U8GLIB_ST7920_128X64_RRD u8g(0,0,0);
@@ -112,18 +118,19 @@ static void lcd_implementation_init()
 	u8g.firstPage();
        
 	do {
-			// RepRapBCN init bmp
-			u8g.drawBitmapP(0,0,START_BMPBYTEWIDTH,START_BMPHEIGHT,start_bmp);
+			// init bmp
+			u8g.drawBitmapP(0,11,START_BMPBYTEWIDTH,START_BMPHEIGHT,start_bmp);
 			// Welcome message
 			u8g.setFont(u8g_font_6x10_marlin);
-			u8g.drawStr(62,10,"BCN3D+");
+			u8g.drawStr(20,10,"");
                         u8g.setFont(u8g_font_5x8);
-                        u8g.drawStr(62,25,"by RepRapBCN");
+                        u8g.drawStr(55,10,"by");
                       	
-						//Rapduch
-						u8g.setPrintPos(83,51);
-						u8g.print("v3.0.2");
-						
+						  //Rapduch						  
+						  u8g.setFont(u8g_font_5x8);
+                                                  u8g.setPrintPos(97,63);
+						  u8g.print("v3.0.2");
+						  
 						  /*
                         u8g.drawStr(62,10,"MARLIN"); 
                         u8g.setFont(u8g_font_5x8);
@@ -200,7 +207,7 @@ static void lcd_implementation_status_screen()
 			// do nothing
 		 }
  
- u8g.setPrintPos(80,47);
+ u8g.setPrintPos(98,47);
  if(starttime != 0)
     {
         uint16_t time = millis()/60000 - starttime/60000;
@@ -343,12 +350,12 @@ static void lcd_implementation_status_screen()
  
   // Extruder 1
  u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(0,6);
- u8g.print("Extruder");
- u8g.setPrintPos(24,14);
+ //u8g.setPrintPos(0,6);
+ //u8g.print("  FUSOR");
+ u8g.setPrintPos(6,7);
  u8g.print(itostr3(int(degTargetHotend(0) + 0.5)));
  lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
- u8g.setPrintPos(24,22);
+ u8g.setPrintPos(6,27);
  u8g.print(itostr3(int(degHotend(0) + 0.5)));
  lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
  if (!isHeatingHotend(0)) u8g.drawBox(13,17,2,2);
@@ -361,12 +368,12 @@ static void lcd_implementation_status_screen()
 
   // Heatbed
  u8g.setFont(FONT_STATUSMENU);
-  u8g.setPrintPos(60,6);
- u8g.print("Hot Bed");
- u8g.setPrintPos(55,14);
+  //u8g.setPrintPos(60,6);
+ //u8g.print("  BASE");
+ u8g.setPrintPos(79,7);
  u8g.print(itostr3(int(degTargetBed() + 0.5)));
  lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
- u8g.setPrintPos(55,22);
+ u8g.setPrintPos(79,27);
  u8g.print(itostr3(int(degBed() + 0.5)));
  lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
  if (!isHeatingBed()) u8g.drawBox(88,18,2,2);
@@ -378,7 +385,8 @@ static void lcd_implementation_status_screen()
 		}
 
   // Barra divisoria
- u8g.drawBox(53,0,3,25);
+  //u8g.drawBox(50,0,3,38); //  BARRA
+ // u8g.drawBox(53,0,3,25); //BARRA ORIGINAL
 
  #endif
  #endif
@@ -396,28 +404,58 @@ static void lcd_implementation_status_screen()
  
  // Barra blanca
  u8g.setFont(FONT_STATUSMENU);
- u8g.drawBox(0,29,128,11);
+ 
+ u8g.drawBox(0,30,1,8);
+ u8g.drawBox(1,29,39,1);
+ u8g.drawBox(40,30,2,8);
+ u8g.drawBox(1,38,39,1); 
+
+ u8g.drawBox(42,29,39,1);
+ u8g.drawBox(42,38,39,1);
+ u8g.drawBox(81,30,2,8);
+ 
+ 
+ u8g.drawBox(83,29,44,1);
+ u8g.drawBox(83,38,44,1);
+ u8g.drawBox(127,30,1,8);
+
+ 
  u8g.setColorIndex(0);	// white on black
  
   // Feedrate
  u8g.setFont(u8g_font_6x10_marlin);
- u8g.setPrintPos(3,38);
+ u8g.setColorIndex(1);  //
+ u8g.setPrintPos(2,51); // u8g.setPrintPos(3,38);
  u8g.print(LCD_STR_FEEDRATE[0]);
  u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(12,37);
+ u8g.setPrintPos(12,51);  // u8g.setPrintPos(12,37);
  u8g.print(itostr3(feedmultiply));
  u8g.print('%');
  
- // Z-Coordinates
- 
+ // X-Y-Z Coordinates // Z-Coordinates
+ u8g.setFont(u8g_font_6x9);
+ u8g.setColorIndex(1);   // 
+ u8g.setPrintPos(2,37);  // 
+ u8g.print("X");  // 
+ u8g.drawPixel(8,33);  // 
+ u8g.drawPixel(8,35);  // 
+ u8g.setPrintPos(10,37);  // 
+ u8g.print(ftostr31ns(current_position[X_AXIS]));  // 
+ u8g.setPrintPos(43,37);  // 
+ lcd_printPGM(PSTR("Y"));  // 
+ u8g.drawPixel(49,33);  // 
+ u8g.drawPixel(49,35);  // 
+ u8g.setPrintPos(51,37);  // 
+ u8g.print(ftostr31ns(current_position[Y_AXIS]));  // 
  u8g.setPrintPos(83,37);
-  u8g.print("Z");
+ u8g.print("Z");
  u8g.drawPixel(89,33);
  u8g.drawPixel(89,35);
  u8g.setPrintPos(91,37);
  u8g.print(ftostr31(current_position[Z_AXIS]));
- u8g.setColorIndex(1);	// black on white
- 
+ u8g.setFont(FONT_STATUSMENU);	
+
+ /* 
  //Smiley
   u8g.setColorIndex(0);	// white on black
   u8g.drawPixel(58,37);
@@ -468,14 +506,14 @@ static void lcd_implementation_status_screen()
   u8g.drawPixel(59,30);
   u8g.drawPixel(60,30);  
   u8g.setColorIndex(1);	// black on white
-  
+  */
   
  //SD %
   u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(2,51);
+ u8g.setPrintPos(53,47);
  u8g.print("SD");
  u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(12,51);
+ u8g.setPrintPos(63,47);
  u8g.print(itostr3(card.percentDone()));
  u8g.print('%');
 
@@ -606,11 +644,12 @@ static void lcd_implementation_drawmenu_setting_edit_generic_P(uint8_t row, cons
 
 void lcd_implementation_drawedit(const char* pstr, char* value)
 {
-		u8g.setPrintPos(0 * DOG_CHAR_WIDTH_LARGE, (u8g.getHeight() - 1 - DOG_CHAR_HEIGHT_LARGE) - (1 * DOG_CHAR_HEIGHT_LARGE) - START_ROW );
-		u8g.setFont(u8g_font_9x18);
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH_LARGE, (u8g.getHeight() - 1 - DOG_CHAR_HEIGHT_LARGE) - (1 * DOG_CHAR_HEIGHT_LARGE) - START_ROW);
+		//u8g.setFont(u8g_font_5x8); //
+                u8g.setFont(u8g_font_9x18); // 
 		lcd_printPGM(pstr);
 		u8g.print(':');
-		u8g.setPrintPos((14 - strlen(value)) * DOG_CHAR_WIDTH_LARGE, (u8g.getHeight() - 1 - DOG_CHAR_HEIGHT_LARGE) - (1 * DOG_CHAR_HEIGHT_LARGE) - START_ROW );
+		u8g.setPrintPos(((14 - strlen(value)) * DOG_CHAR_WIDTH_LARGE), (u8g.getHeight() - 1 - DOG_CHAR_HEIGHT_LARGE) - (1 * DOG_CHAR_HEIGHT_LARGE) - START_ROW );
 		u8g.print(value);
 }
 
@@ -743,7 +782,7 @@ static void lcd_implementation_quick_feedback()
     SET_OUTPUT(BEEPER);
     for(int8_t i=0;i<10;i++)
     {
-		tone(BEEPER, 1200, 50);		
+		tone(BEEPER, 500, 5);		
 		//WRITE(BEEPER,HIGH);
 		//delay(3);
 		//WRITE(BEEPER,LOW);

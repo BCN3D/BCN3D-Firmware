@@ -186,9 +186,21 @@
 
 // If you are using a preconfigured hotend then you can use one of the value sets by uncommenting it
 // Ultimaker
-    #define  DEFAULT_Kp 20.12
-    #define  DEFAULT_Ki 1.22
-    #define  DEFAULT_Kd 97.4
+    
+    /*VERSION BCN2
+    #define  DEFAULT_Kp 22.2
+    #define  DEFAULT_Ki 1.08
+    #define  DEFAULT_Kd 114
+    */
+    
+    // VERSION BCN2.1
+    #define  DEFAULT_Kp 13.50
+    #define  DEFAULT_Ki 0.63
+    #define  DEFAULT_Kd 68.37
+
+
+
+
 
 // Makergear
 //    #define  DEFAULT_Kp 7.0
@@ -320,11 +332,11 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 
 // Travel limits after homing
 //Changes Rapduch v.23
-//#define X_MAX_POS 242.5
-#define X_MAX_POS 252
+#define X_MAX_POS 242.5
+//#define X_MAX_POS 252
 #define X_MIN_POS 0
-//#define Y_MAX_POS 210
-#define Y_MAX_POS 200
+#define Y_MAX_POS 210
+//#define Y_MAX_POS 200
 #define Y_MIN_POS 0
 #define Z_MAX_POS 200
 #define Z_MIN_POS 0
@@ -351,10 +363,10 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // default settings
 
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {80.19,80.43,2560,458.3}  // default steps per unit for Ultimaker
-#define DEFAULT_MAX_FEEDRATE          {250, 250, 3.5, 100}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {1000,1000,500,500}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_MAX_FEEDRATE          {250, 250, 3.5, 25}    // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {1500,1500,100,100}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
-#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
+#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  2000   // X, Y, Z and E max acceleration in mm/s^2 for retracts
 
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
@@ -394,8 +406,8 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define ABS_PREHEAT_HPB_TEMP 70
 #define ABS_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
-#define NYLON_PREHEAT_HOTEND_TEMP 245
-#define NYLON_PREHEAT_HPB_TEMP 0
+#define NYLON_PREHEAT_HOTEND_TEMP 225
+#define NYLON_PREHEAT_HPB_TEMP 60
 #define NYLON_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
 #define PVA_PREHEAT_HOTEND_TEMP 180
@@ -409,10 +421,6 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 #define LAYBRICK_PREHEAT_HOTEND_TEMP 200
 #define LAYBRICK_PREHEAT_HPB_TEMP 40
 #define LAYBRICK_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
-
-#define FILAFLEX_PREHEAT_HOTEND_TEMP 235
-#define FILAFLEX_PREHEAT_HPB_TEMP 0
-#define FILAFLEX_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
 
 //LCD and SD support
@@ -518,7 +526,7 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
   #define SDSUPPORT
   #define ULTRA_LCD
   #ifdef DOGLCD // Change number of lines to match the DOG graphic display
-    #define LCD_WIDTH 20
+    #define LCD_WIDTH 26
     #define LCD_HEIGHT 5
   #else
     #define LCD_WIDTH 20
